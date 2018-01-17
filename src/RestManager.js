@@ -42,6 +42,15 @@ const requestMethods = {
 				'Content-Type': 'application/json',
 			},
 		}).then(res => res.status === 200 && res.json()),
+
+	getTrades: () =>
+		fetch(`${ENDPOINT}trades`, {
+			method: 'GET',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then(res => res.status === 200 && res.json()),
 }
 
 const sessionMethods = {

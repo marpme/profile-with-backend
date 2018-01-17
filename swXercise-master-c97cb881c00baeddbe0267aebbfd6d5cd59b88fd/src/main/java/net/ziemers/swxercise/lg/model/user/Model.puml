@@ -1,0 +1,53 @@
+@startuml
+
+class BaseEntity {
+    - Long id
+}
+
+class User {
+    - String firstname
+    - String lastname
+}
+class Profile {
+    - String username
+    - String passwordHash
+    - String salt
+    - PasswordHashAlgorithm hashAlgorithm
+    - String mailaddress
+    + String setPassword(String password)
+    - String getPasswordHash()
+    + boolean isValidPassword(String password)
+    - void setPasswordHash()
+}
+
+class Role {
+    - String name
+    - Collection<RightState> rights
+}
+
+class Address {
+    - String street
+    - String zipcode
+    - String city
+    - String country
+}
+
+enum PasswordHashAlgorithm {
+    SHA512
+}
+
+enum RightState {
+    NOT_LOGGED_IN
+    LOGGED_IN
+    ADMIN
+}
+
+BaseEntity <|-- User : MappedSuperClass
+User "1" --> "0..1" Profile
+User "1" --> "0..1" Address
+Profile "*" --> "1" Role
+Profile ..> "1" PasswordHashAlgorithm
+Role "*" --> "1" Role : parent
+Role ..> "*" RightState
+
+@enduml

@@ -6,7 +6,7 @@
 
 .align {
 	align-items: center;
-	display: flex;
+	display: grid;
 	flex-direction: column;
 	justify-content: center;
 }

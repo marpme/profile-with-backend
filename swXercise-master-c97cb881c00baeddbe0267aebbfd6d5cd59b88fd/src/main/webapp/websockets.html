@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>Test WebSockets</title>
+    </head>
+
+    <body>
+        <script>
+            // Anmelden und REST-Session-Id erhalten
+            var restUrl = "http://localhost:8080/swxercise/rest/v1/user/login";
+            var method = "POST";
+            var jsObject = { "username": "admin", "password": "admin" };
+            var xmlHttpRequest = new XMLHttpRequest();
+
+            xmlHttpRequest.open(method, restUrl);
+            xmlHttpRequest.setRequestHeader("Content-type", "application/json");
+            xmlHttpRequest.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    var jsResponse = JSON.parse(this.responseText);
+
+                    establishWebSocket(jsResponse.message);
+
+                    console.log("REST-Session-Id is '" + jsResponse.message + "'.");
+                }
+            };
+            xmlHttpRequest.send(JSON.stringify(jsObject));
+
+            // WebSocket-Verbindung etablieren
+            var webSocket;
+
+            function establishWebSocket(restSessionId) {
+                var wsUrl = "ws://localhost:8080/swxercise/ws/api/v1/anEndpoint/" + restSessionId;
+
+                webSocket = new WebSocket(wsUrl);
+
+                // Callback-Methoden für die WebSocket-Kommunikation
+                webSocket.onopen = function(e) { onWebSocketOpen(e) };
+                webSocket.onclose = function(e) { onWebSocketClose(e) };
+                webSocket.onmessage = function(e) { onWebSocketMessage(e) };
+                webSocket.onerror = function(e) { onWebSocketError(e) };
+
+                function onWebSocketOpen(e) {
+                    console.log("WebSocket has been opened.");
+                }
+
+                function onWebSocketClose(e) {
+                    console.log("WebSocket has been closed.");
+                }
+
+                function onWebSocketMessage(e) {
+                    // JSON-String in ein JavaScript-Objekt konvertieren
+                    var json = JSON.parse(e.data);
+
+                    console.log("WebSocket Message '" + json.message + "' has been received.");
+                }
+
+                function onWebSocketError(e) {
+                    alert("WebSocket Error " + e + " has been thrown!");
+                }
+            }
+
+            function sendWebSocketMessage() {
+                var jsonPayload = { "message": "Hello World!" };
+
+                // JavaScript-Objekt in einen JSON-String konvertieren
+                webSocket.send(JSON.stringify(jsonPayload));
+
+                console.log("Tried to send WebSocket Message.");
+            }
+        </script>
+        <button onclick="sendWebSocketMessage()">Klick mich.</button>
+    </body>
+</html>

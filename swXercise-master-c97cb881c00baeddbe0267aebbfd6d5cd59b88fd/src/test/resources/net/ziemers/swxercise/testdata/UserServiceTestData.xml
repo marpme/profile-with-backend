@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <Role id="3" name="name_role_empty"/>
+    <Role id="4" name="name_role_admin"/>
+    <Role_rights Role_id="4" rights="ADMIN"/>
+    <!-- die Gross-/Kleinschreibung scheint unter bestimmten Bedingungen von Bedeutung zu sein! -->
+    <!-- das Kennwort ist "secret" -->
+    <Profile id="1" role_id="4" username="username_profile" passwordHash="9EOZEsheQcXixUO/XW/vPwRlZh9NMyHppli2qKe3U9+Y0EHhtJU1AA56pkduCGsSbp8VZ7so/62+3cftxBhJGg==" hashAlgorithm="SHA512" salt="FuQll2Av59se1r1Dc4WEPDmzZw4="/>
+    <User id="2" firstname="firstname_user" lastname="lastname_user" profile_id="1"/>
+    <User id="5" firstname="firstname_user2" lastname="lastname_user2"/>
+</dataset>

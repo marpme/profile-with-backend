@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import RestManager from './RestManager'
 import Login from './Login'
 import UserForm from './UserForm'
+import TradesView from './TradesView'
 import './App.css'
 
 class App extends Component {
@@ -60,10 +61,13 @@ class App extends Component {
 				{!this.state.authorized ? (
 					<Login that={this} failed={this.state.failed} />
 				) : (
-					<UserForm
-						sessionId={this.state.sessionId}
-						setIfLoggedIn={this.setIfLoggedIn}
-					/>
+					<div>
+						<UserForm
+							sessionId={this.state.sessionId}
+							setIfLoggedIn={this.setIfLoggedIn}
+						/>
+						<TradesView />
+					</div>
 				)}
 				<p className="text--center">
 					Connected?{' '}

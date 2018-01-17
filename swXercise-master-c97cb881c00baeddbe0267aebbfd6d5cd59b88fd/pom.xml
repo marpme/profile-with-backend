@@ -1,0 +1,153 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.ziemers</groupId>
+	<artifactId>swxercise</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>swXercise Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<mvn-compiler-plugin-version>3.3</mvn-compiler-plugin-version>
+		<jee-version>7.0</jee-version>
+		<java-version>1.8</java-version>
+		<jaxrs-version>2.0.1</jaxrs-version>
+		<resteasy-version>3.1.3.Final</resteasy-version>
+		<mysql-version>5.1.41</mysql-version>
+		<hibernate-version>5.2.1.Final</hibernate-version>
+		<junit-version>4.12</junit-version>
+		<mockito-version>2.7.22</mockito-version>
+		<dbunit-version>2.5.1</dbunit-version>
+		<slf4j-version>1.7.25</slf4j-version>
+        <jglue-version>3.1.4</jglue-version>
+		<jackson-version>2.8.8.1</jackson-version>
+		<jetty-version>9.4.8.v20171121</jetty-version>
+
+		<!-- Substituiert die Platzhalter in der "persistence.xml" -->
+		<TEST_SCHEMA_NAME>swxercise_test</TEST_SCHEMA_NAME>
+		<swxercise.test.schema>${TEST_SCHEMA_NAME}</swxercise.test.schema>
+		<swxercise.test.host>localhost</swxercise.test.host>
+		<swxercise.test.user>root</swxercise.test.user>
+		<swxercise.test.password>root</swxercise.test.password>
+		<swxercise.test.port>3306</swxercise.test.port>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>${jee-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>${jaxrs-version}</version>
+			<scope>provided</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>${resteasy-version}</version>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!--dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-version}</version>
+		</dependency-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>${dbunit-version}</version>
+            <scope>test</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-version}</version>
+			<scope>provided</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.jglue.cdi-unit</groupId>
+            <artifactId>cdi-unit</artifactId>
+            <version>${jglue-version}</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jetty-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+			<version>${jetty-version}</version>
+			<scope>provided</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.websocket</groupId>
+			<artifactId>javax-websocket-server-impl</artifactId>
+			<version>${jetty-version}</version>
+			<scope>provided</scope>
+		</dependency>
+        <!-- Sorgt für eine schnellere Verwaltung der JSON-Umwandlung im REST-Kontext -->
+		<!-- dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-version}</version>
+		</dependency -->
+    </dependencies>
+	<build>
+		<finalName>swXercise</finalName>
+
+		<resources>
+			<!-- Sorgt dafür, dass Properties-Filtering von hier in die "persistence.xml" funktioniert -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${mvn-compiler-plugin-version}</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jetty-version}</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>

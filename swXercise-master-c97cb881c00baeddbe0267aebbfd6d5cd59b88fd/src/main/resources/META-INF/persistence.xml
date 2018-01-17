@@ -1,0 +1,35 @@
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<!-- Eclipse warnt hier: Multiple persistence units specified - only the first will be recognized -->
+	<!-- Diese Warnung kann ignoriert werden (in "IntelliJ IDEA" tritt sie gar nicht erst auf) -->
+	<persistence-unit name="swXercisePU" transaction-type="JTA">
+		<jta-data-source>java:jboss/datasources/swXerciseDS</jta-data-source>
+		<properties>
+      <property name="wildfly.jpa.default-unit" value="true"/>
+			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<property name="hibernate.hbm2ddl.import_files" value="/bootstrap_data.sql"/>
+		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="swXerciseTestPU" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<!-- Property for WildFly to ignore this -->
+			<property name="jboss.as.jpa.managed" value="false" />
+			<!-- Properties for Hibernate -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://${swxercise.test.host}:${swxercise.test.port}/${swxercise.test.schema}?useSSL=false" />
+			<property name="javax.persistence.jdbc.user" value="${swxercise.test.user}" />
+			<property name="javax.persistence.jdbc.password" value="${swxercise.test.password}" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="hibernate.connection.useUnicode" value="true" />
+			<property name="hibernate.connection.characterEncoding" value="UTF-8" />
+			<property name="hibernate.ejb.entitymanager_factory_name" value="swXerciseTestPU" />
+		</properties>
+	</persistence-unit>
+</persistence>
